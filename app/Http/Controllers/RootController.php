@@ -22,16 +22,26 @@ class RootController extends Controller
                 'page' => $page
             ]
         ];
-        $res = $client->get($this->apiUrl('people/'), $params)->getBody();
+        try {
+            $res = $client->get($this->apiUrl('people/'), $params);   
+        } catch (\Exception $e) {
+            $res = null;
+        }
 
-        $obj = json_decode($res);
+        if (!$res) {
+            $hasNext = '';
+            $hasPrevious = '';
+            $peoples = [];
+        } else {
+            $obj = json_decode($res->getBody());
 
-        $nextPage     = $page + 1;
-        $previousPage = $page - 1;
+            $nextPage     = $page + 1;
+            $previousPage = $page - 1;
 
-        $hasNext     = $obj->next ? URL::to("/?page=$nextPage") : "";
-        $hasPrevious = $obj->previous ? URL::to("/?page=$previousPage") : "";
-        $peoples     = $obj->results;
+            $hasNext     = $obj->next ? URL::to("/?page=$nextPage") : "";
+            $hasPrevious = $obj->previous ? URL::to("/?page=$previousPage") : "";
+            $peoples     = $obj->results;
+        }
 
         return view('rootView', compact('hasNext', 'hasPrevious', 'peoples', 'page'));
     }
