@@ -2,7 +2,7 @@
 
 > A list of characters from Star Wars
 
-## Stack
+## Requirements
 
 - [Composer](https://getcomposer.org/)
 - [PHP 5.6.4ˆ](https://secure.php.net/)
@@ -28,4 +28,25 @@ $ composer install
 ```sh
 $ cd public/assets
 $ bower install
+$ cd ../..
 ```
+
+- 4 - Make a copy of .env.example and rename just as .env:
+
+```sh
+$ cp .env.example .env
+```
+
+- 5 - Generate Laravel key:
+
+```sh
+$ php artisan key:generate
+```
+
+- 6 - Run Laravel server:
+
+```sh
+$ php artisan serve
+```
+
+- 7 - Open locally in [http://127.0.0.1:8000](http://127.0.0.1:8000) and have fun :)
